@@ -1,0 +1,122 @@
+
+
+function cambiarSizeTecla(elemento){
+	console.log("Valor id seleccionado: "+elemento.id);
+	
+	if(elemento.id == 'mas')
+	{
+		elemento.id = '+';
+	}
+	else if(elemento.id == 'menos')
+	{
+		elemento.id = '-';		
+	}
+	else if(elemento.id == 'por')
+	{
+		elemento.id = '*';		
+	}
+	else if(elemento.id == 'dividido')
+	{
+		elemento.id = '/';		
+	}	
+	
+	var digitoActual = elemento.id;
+	var digitoPrevio = document.getElementById('display').innerHTML;
+	
+	if(digitoPrevio == 0 && digitoActual != ".")
+	{
+		digitoPrevio = digitoPrevio.replace("0", "");
+		document.getElementById('display').innerHTML = digitoPrevio + digitoActual;
+	}
+	else
+	{	
+		document.getElementById('display').innerHTML = digitoPrevio + digitoActual;
+	}	
+	
+	
+	elemento.style.height = "75px";
+	if(elemento.id == '+')
+	{
+		elemento.style.height = "150px";
+	}
+	
+/*	
+	if(elemento.id ==  'divido' || elemento.id ==  'por' || elemento.id ==  'menos' || elemento.id ==  'mas')	
+	{
+		operaciones(elemento.id);
+		//return false;
+	}
+*/	
+}	
+
+function reducirSizeTecla(elemento){
+	elemento.style.height = "64px";
+	if(elemento.id == 'mas')
+	{
+		elemento.id = '+';
+	}
+		console.log("ajustando valor tecla +: "+elemento.id);	
+	if(elemento.id == '+')
+	{
+		console.log("ajustando valor tecla +: "+elemento.id);
+		elemento.style.height = "140px";
+	}
+}
+
+function operaciones(op)
+{
+	var operadorA = documento.getElementById('display').innerHTML;
+	//console.log("Entrando a operado: "+op);
+	switch(op){
+		case 'mas':
+			console.log("Operador a utilizar: "+op);
+
+						
+			break;
+	
+		case 'menos':
+			console.log("Operador a utilizar: "+op);
+			break;
+		
+		case 'por':
+			console.log("Operador a utilizar: "+op);
+			break;
+			
+		case 'divido':	
+			console.log("Operador a utilizar: "+op);
+			break;
+	}
+	
+}
+
+
+var Calculadora = {
+	init: function(){
+		//document.getElementById('display').innerHTML = ' ';
+		this.asignarEventoTecla('tecla');
+	},
+	
+	asignarEventoTecla: function(selector){
+		
+		var botonPagina = document.getElementsByClassName(selector);
+		for (var i = 0; i < botonPagina.length; i++) {
+			botonPagina[i].onmousedown = this.eventoCambioTamanio;
+			botonPagina[i].onmouseup = this.eventoReducirTamanio;
+		}
+	},
+
+	eventoCambioTamanio: function(event){
+		cambiarSizeTecla(event.target);
+	},
+
+	eventoReducirTamanio: function(event){
+		reducirSizeTecla(event.target);
+	},
+	
+	eventoDeterminarOperacion: function(event){
+			//console.log("Valor id seleccionado: "+event.target);
+	}
+	
+}
+
+Calculadora.init();

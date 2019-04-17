@@ -1,0 +1,136 @@
+
+
+function cambiarSizeTecla(elemento){
+	console.log("Valor id seleccionado: "+elemento.id);
+	
+	if(elemento.id == 'igual')
+	{
+		calcular();
+		return;
+	}
+	if(elemento.id == 'on')
+	{
+		limpiar();
+		return;
+	}	
+
+	var valorActual = elemento.id;
+	var valorPrevio = document.getElementById('display').innerHTML;
+	
+	if(valorPrevio == 0 && valorActual != ".")
+	{
+		valorPrevio = valorPrevio.replace("0", "");
+		document.getElementById('display').innerHTML = valorPrevio + valorActual;
+	}
+	else
+	{	
+		if(valorActual == 'mas')
+		{
+			valorActual = '+';
+		}
+		else if(valorActual == 'menos')
+		{
+			valorActual = '-';		
+		}
+		else if(valorActual == 'por')
+		{
+			valorActual = '*';		
+		}
+		else if(valorActual == 'dividido')
+		{
+			valorActual = '/';		
+		}
+
+		document.getElementById('display').innerHTML = valorPrevio + valorActual;
+	}
+	
+
+	
+	elemento.style.height = "75px";
+	if(elemento.id == 'mas')
+	{
+		elemento.style.height = "150px";
+	}
+	if(elemento.id ==  'divido' || elemento.id ==  'por' || elemento.id ==  'menos' || elemento.id ==  'mas')	
+	{
+		operaciones(elemento.id);
+		//return false;
+	}
+	
+}	
+
+function calcular()
+{
+	console.log("Estoy en Funcion Calcular");
+	var actual = document.getElementById('display').innerHTML;
+	var suma = actual.indexOf("+");
+	var resta = actual.indexOf("-");
+	var div = actual.indexOf("÷");
+	var mult = actual.indexOf("x");
+	if (suma !== -1) {
+		arr = actual.split("+",2);
+		res = parseInt(arr[0]) + parseInt(arr[1]);
+		document.getElementById("display").innerHTML = res;
+	} else if (resta !== -1) {
+		arr = actual.split("-",2);
+		res = arr[0] - arr[1];
+		document.getElementById("display").innerHTML = res;
+		
+	} else if (div !== -1) {
+		arr = actual.split("÷",2);
+		res = arr[0] / arr[1];
+		document.getElementById("display").innerHTML = res;
+		
+	} else if (mult !== -1) {
+		arr = actual.split("x",2);
+		res = arr[0] * arr[1];
+		document.getElementById("display").innerHTML = res;
+		
+	}	
+}
+
+function limpiar()
+{
+	document.getElementById("display").innerHTML = "0";
+}
+
+
+function reducirSizeTecla(elemento){
+	elemento.style.height = "64px";
+		if(elemento.id == 'mas')
+	{
+		elemento.style.height = "140px";
+	}
+}
+
+
+var Calculadora = {
+	init: function(){
+		//document.getElementById('display').innerHTML = ' ';
+		this.asignarEventoTecla('tecla');
+	},
+	
+	asignarEventoTecla: function(selector){
+		
+		var botonPagina = document.getElementsByClassName(selector);
+		for (var i = 0; i < botonPagina.length; i++) {
+			botonPagina[i].onmousedown = this.eventoCambioTamanio;
+			botonPagina[i].onmouseup = this.eventoReducirTamanio;
+		}
+	},
+
+	eventoCambioTamanio: function(event){
+		cambiarSizeTecla(event.target);
+	},
+
+	eventoReducirTamanio: function(event){
+		reducirSizeTecla(event.target);
+	},
+	
+	eventoDeterminarOperacion: function(event){
+			console.log("Valor id seleccionado: "+event.target);
+	}
+	
+}
+
+Calculadora.init();
